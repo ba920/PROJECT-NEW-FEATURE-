@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروجیکٹ رپورٹ - Peacock Blue</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header-section h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .header-section p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-print {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-download {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-back {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        .project-selector {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .project-selector h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .project-selector select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .project-selector select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .report-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .report-header {
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .report-header h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .report-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            text-align: center;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .profit {
+            color: #27ae60 !important;
+        }
+
+        .loss {
+            color: #e74c3c !important;
+        }
+
+        .daily-entries-section {
+            margin-top: 30px;
+        }
+
+        .daily-entries-section h3 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .daily-entry {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .daily-entry-date {
+            font-weight: 700;
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .daily-entry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .daily-entry-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+
+        .daily-entry-label {
+            color: #999;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .daily-entry-value {
+            font-weight: 700;
+            color: #333;
+            font-size: 16px;
+            margin-top: 6px;
+        }
+
+        .info-section {
+            margin-top: 12px;
+            padding: 12px;
+            background: #f0f8ff;
+            border-left: 3px solid #0277bd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .info-section strong {
+            color: #0277bd;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e8f4f8;
+            color: #0277bd;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin: 4px 4px 4px 0;
+            font-weight: 600;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 60px 40px;
+            color: #999;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .table th {
+            background-color: #f0f0f0;
+            padding: 12px;
+            text-align: right;
+            border-bottom: 2px solid #ddd;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            color: #666;
+        }
+
+        .table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .amount-right {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .header-section {
+                padding: 20px;
+            }
+
+            .header-section h1 {
+                font-size: 22px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .daily-entry-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .action-buttons,
+            .project-selector,
+            .print-hide {
+                display: none !important;
+            }
+
+            .report-section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+
+            .header-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <h1>🔧 Peacock Blue Air Conditioner & Refrigerators</h1>
+            <p>رپورٹ منیجمنٹ سسٹم - Dubai Edition (AED)</p>
+        </div>
+
+        <div class="project-selector print-hide">
+            <h2>پروجیکٹ منتخب کریں:</h2>
+            <select id="projectSelect" onchange="loadProject()">
+                <option value="">-- پروجیکٹ منتخب کریں --</option>
+            </select>
+        </div>
+
+        <div class="action-buttons print-hide">
+            <button class="btn btn-print" onclick="printReport()">🖨️ پرنٹ کریں</button>
+            <button class="btn btn-download" onclick="saveReport()">💾 فائل میں سیو کریں</button>
+            <button class="btn btn-back" onclick="goBack()">← واپس جائیں</button>
+        </div>
+
+        <div id="reportContainer"></div>
+    </div>
+
+    <script>
+        let allProjects = JSON.parse(localStorage.getItem('projects')) || [];
+        let currentProject = null;
+
+        function formatCurrency(amount) {
+            return 'AED ' + Math.round(amount).toLocaleString('en-AE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        function formatDate(dateStr) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-AE', options);
+        }
+
+        function initializeProjectSelect() {
+            const select = document.getElementById('projectSelect');
+            select.innerHTML = '<option value="">-- پروجیکٹ منتخب کریں --</option>';
+            
+            allProjects.forEach(project => {
+                const option = document.createElement('option');
+                option.value = project.id;
+                option.textContent = project.name;
+                select.appendChild(option);
+            });
+        }
+
+        function calculateProjectTotals(project) {
+            let totalExpenses = 0;
+            let totalAmountReceived = 0;
+
+            project.dailyEntries.forEach(entry => {
+                totalExpenses += entry.expenses;
+                totalAmountReceived += entry.amountReceived;
+            });
+
+            const pendingAmount = project.totalValue - totalAmountReceived;
+            const profit = totalAmountReceived - totalExpenses;
+
+            return {
+                totalValue: project.totalValue,
+                totalExpenses,
+                totalAmountReceived,
+                pendingAmount,
+                profit,
+                days: project.dailyEntries.length
+            };
+        }
+
+        function loadProject() {
+            const projectId = document.getElementById('projectSelect').value;
+            if (!projectId) {
+                document.getElementById('reportContainer').innerHTML = '<div class="empty-message">پروجیکٹ منتخب کریں</div>';
+                return;
+            }
+
+            currentProject = allProjects.find(p => p.id == projectId);
+            if (!currentProject) return;
+
+            displayReport();
+        }
+
+        function displayReport() {
+            if (!currentProject) return;
+
+            const totals = calculateProjectTotals(currentProject);
+            const container = document.getElementById('reportContainer');
+
+            let html = `
+                <div class="report-section">
+                    <div class="report-header">
+                        <h2>${currentProject.name}</h2>
+                        ${currentProject.description ? `<p>📝 ${currentProject.description}</p>` : ''}
+                    </div>
+
+                    <div class="summary-grid">
+                        <div class="summary-box">
+                            <div class="summary-label">💼 کل رقم</div>
+                            <div class="summary-value">${formatCurrency(totals.totalValue)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">💰 موصول</div>
+                            <div class="summary-value">${formatCurrency(totals.totalAmountReceived)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">⏳ زیرالتوا</div>
+                            <div class="summary-value">${formatCurrency(totals.pendingAmount)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">💸 اخراجات</div>
+                            <div class="summary-value">${formatCurrency(totals.totalExpenses)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">📊 منافع/نقصان</div>
+                            <div class="summary-value ${totals.profit >= 0 ? 'profit' : 'loss'}">${formatCurrency(totals.profit)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">📅 دن</div>
+                            <div class="summary-value">${totals.days}</div>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <tr>
+                            <th>کل قدر</th>
+                            <th>موصول</th>
+                            <th>زیرالتوا</th>
+                            <th>اخراجات</th>
+                            <th>منافع/نقصان</th>
+                            <th>دن</th>
+                        </tr>
+                        <tr>
+                            <td class="amount-right">${formatCurrency(totals.totalValue)}</td>
+                            <td class="amount-right">${formatCurrency(totals.totalAmountReceived)}</td>
+                            <td class="amount-right">${formatCurrency(totals.pendingAmount)}</td>
+                            <td class="amount-right">${formatCurrency(totals.totalExpenses)}</td>
+                            <td class="amount-right ${totals.profit >= 0 ? 'profit' : 'loss'}">${formatCurrency(totals.profit)}</td>
+                            <td class="amount-right">${totals.days}</td>
+                        </tr>
+                    </table>
+
+                    ${currentProject.dailyEntries.length > 0 ? `
+                        <div class="daily-entries-section">
+                            <h3>📅 روزمرہ اندراجات (${currentProject.dailyEntries.length})</h3>
+                            ${currentProject.dailyEntries.sort((a, b) => new Date(b.date) - new Date(a.date)).map(entry => {
+                                const dailyProfit = entry.amountReceived - entry.expenses;
+                                return `
+                                    <div class="daily-entry">
+                                        <div class="daily-entry-date">📅 ${formatDate(entry.date)}</div>
+                                        <div class="daily-entry-grid">
+                                            <div class="daily-entry-item">
+                                                <div class="daily-entry-label">موصول</div>
+                                                <div class="daily-entry-value">${formatCurrency(entry.amountReceived)}</div>
+                                            </div>
+                                            <div class="daily-entry-item">
+                                                <div class="daily-entry-label">اخراجات</div>
+                                                <div class="daily-entry-value">${formatCurrency(entry.expenses)}</div>
+                                            </div>
+                                            <div class="daily-entry-item">
+                                                <div class="daily-entry-label">منافع</div>
+                                                <div class="daily-entry-value ${dailyProfit >= 0 ? 'profit' : 'loss'}">${formatCurrency(dailyProfit)}</div>
+                                            </div>
+                                        </div>
+                                        ${entry.teamMembers.length > 0 ? `<div class="info-section"><strong>👥 ٹیم کے ارکان:</strong> ${entry.teamMembers.map(m => `<span class="tag">${m}</span>`).join('')}</div>` : ''}
+                                        ${entry.materials.length > 0 ? `<div class="info-section"><strong>🔧 مواد:</strong> ${entry.materials.map(m => `<span class="tag">${m}</span>`).join('')}</div>` : ''}
+                                        ${entry.notes ? `<div class="info-section"><strong>📝 نوٹ:</strong> ${entry.notes}</div>` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    ` : '<div class="no-data">کوئی روزمرہ اندراجات نہیں</div>'}
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function printReport() {
+            if (!currentProject) {
+                alert('براہ کرم پروجیکٹ منتخب کریں');
+                return;
+            }
+            window.print();
+        }
+
+        function saveReport() {
+            if (!currentProject) {
+                alert('براہ کرم پروجیکٹ منتخب کریں');
+                return;
+            }
+
+            const totals = calculateProjectTotals(currentProject);
+            const filename = `${currentProject.name.replace(/\s+/g, '_')}_Report_${new Date().toISOString().split('T')[0]}.json`;
+
+            const reportData = {
+                company: 'Peacock Blue Air Conditioner & Refrigerators',
+                projectName: currentProject.name,
+                description: currentProject.description,
+                location: 'Dubai',
+                currency: 'AED',
+                generatedAt: new Date().toLocaleString('en-AE'),
+                summary: {
+                    totalValue: totals.totalValue,
+                    totalReceived: totals.totalAmountReceived,
+                    totalExpenses: totals.totalExpenses,
+                    pendingAmount: totals.pendingAmount,
+                    profit: totals.profit,
+                    totalDays: totals.days
+                },
+                dailyEntries: currentProject.dailyEntries
+            };
+
+            const dataStr = JSON.stringify(reportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(url);
+            alert('✓ رپورٹ کامیابی سے محفوظ ہو گئی!');
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            initializeProjectSelect();
+        });
+    </script>
+</body>
+</html>
