@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peacock Blue - Project Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sidebar {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-small {
+            width: auto;
+            padding: 8px 14px;
+            font-size: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .btn-edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-print {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-download {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-add-daily {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .btn-edit:hover {
+            background: #2980b9;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        .btn-print:hover {
+            background: #229954;
+        }
+
+        .btn-download:hover {
+            background: #e67e22;
+        }
+
+        .projects-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .projects-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .project-card {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-card:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .project-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .project-desc {
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .project-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #eee;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+            border-left: 3px solid #667eea;
+        }
+
+        .summary-label {
+            font-size: 10px;
+            color: #666;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .profit {
+            color: #27ae60 !important;
+        }
+
+        .loss {
+            color: #e74c3c !important;
+        }
+
+        .daily-entries {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .daily-entries h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .daily-entry {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .daily-entry:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        .daily-entry-date {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .daily-entry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .daily-entry-item {
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .daily-entry-item-label {
+            color: #999;
+            font-weight: 600;
+            font-size: 10px;
+        }
+
+        .daily-entry-item-value {
+            font-weight: 700;
+            color: #333;
+            margin-top: 4px;
+        }
+
+        .daily-entry-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-tiny {
+            padding: 5px 10px;
+            font-size: 11px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-tiny-edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-tiny-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-tiny-print {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-tiny-download {
+            background: #f39c12;
+            color: white;
+        }
+
+        .no-entries {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 40px;
+            color: #999;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+            max-width: 800px;
+            width: 90%;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #333;
+            transform: rotate(90deg);
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e8f4f8;
+            color: #0277bd;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin: 4px 4px 4px 0;
+            font-weight: 600;
+        }
+
+        .info-section {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f0f8ff;
+            border-left: 3px solid #0277bd;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .info-section strong {
+            color: #0277bd;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .project-header {
+                flex-direction: column;
+            }
+
+            .project-actions {
+                margin-top: 10px;
+                flex-wrap: wrap;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .sidebar,
+            .project-actions,
+            .daily-entry-actions,
+            .modal,
+            .btn-add-daily {
+                display: none !important;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .daily-entry {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 Peacock Blue Air Conditioner & Refrigerators</h1>
+            <p>Professional Project Management System - Dubai Edition (AED)</p>
+            <div class="header-actions">
+                <button class="btn-small btn-print" onclick="printAllProjects()">🖨️ Print All Projects</button>
+                <button class="btn-small btn-download" onclick="downloadAllProjects()">💾 Download All Projects</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <h2>➕ Add New Project</h2>
+                
+                <div class="form-group">
+                    <label>Project Name *</label>
+                    <input type="text" id="projectName" placeholder="e.g., AC Installation">
+                </div>
+
+                <div class="form-group">
+                    <label>Project Description</label>
+                    <textarea id="projectDescription" placeholder="Project details, location, client info..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Project Value (AED) *</label>
+                    <input type="number" id="totalProjectValue" placeholder="Enter total project value" min="0" step="100">
+                </div>
+
+                <button onclick="addProject()">✓ Add Project</button>
+            </div>
+
+            <div class="projects-section">
+                <h2>📋 Projects List</h2>
+                <div id="projectsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Project Modal -->
+    <div class="modal" id="editProjectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                ✏️ Edit Project
+                <button class="close-btn" onclick="closeEditProjectModal()">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Project Name</label>
+                <input type="text" id="editProjectName" placeholder="Enter project name">
+            </div>
+
+            <div class="form-group">
+                <label>Project Description</label>
+                <textarea id="editProjectDescription" placeholder="Enter project description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Total Project Value (AED)</label>
+                <input type="number" id="editTotalProjectValue" placeholder="Enter total project value" min="0" step="100">
+            </div>
+
+            <button onclick="saveProjectEdit()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Add Daily Entry Modal -->
+    <div class="modal" id="addDailyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                📅 Add Daily Entry
+                <button class="close-btn" onclick="closeAddDailyModal()">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Date *</label>
+                <input type="date" id="dailyDate">
+            </div>
+
+            <div class="stats-grid">
+                <div class="form-group">
+                    <label>Amount Received (AED)</label>
+                    <input type="number" id="dailyAmountReceived" placeholder="0" min="0" step="100">
+                </div>
+
+                <div class="form-group">
+                    <label>Expenses (AED)</label>
+                    <input type="number" id="dailyExpenses" placeholder="0" min="0" step="100">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Team Members (comma separated)</label>
+                <textarea id="dailyTeamMembers" placeholder="e.g., Ahmed, Ali, Hassan"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Description / Notes</label>
+                <textarea id="dailyNotes" placeholder="Additional notes, materials used, or any other details..."></textarea>
+            </div>
+
+            <button onclick="saveDailyEntry()">💾 Save Daily Entry</button>
+        </div>
+    </div>
+
+    <!-- Edit Daily Entry Modal -->
+    <div class="modal" id="editDailyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                ✏️ Edit Daily Entry
+                <button class="close-btn" onclick="closeEditDailyModal()">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="editDailyDate">
+            </div>
+
+            <div class="stats-grid">
+                <div class="form-group">
+                    <label>Amount Received (AED)</label>
+                    <input type="number" id="editDailyAmountReceived" placeholder="0" min="0" step="100">
+                </div>
+
+                <div class="form-group">
+                    <label>Expenses (AED)</label>
+                    <input type="number" id="editDailyExpenses" placeholder="0" min="0" step="100">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Team Members (comma separated)</label>
+                <textarea id="editDailyTeamMembers" placeholder="e.g., Ahmed, Ali, Hassan"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Description / Notes</label>
+                <textarea id="editDailyNotes" placeholder="Additional notes, materials used, or any other details..."></textarea>
+            </div>
+
+            <button onclick="saveEditDailyEntry()">💾 Save Changes</button>
+        </div>
+    </div>
+
+    <script>
+        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+        let editingProjectId = null;
+        let editingDailyId = null;
+        let currentProjectIdForDaily = null;
+
+        function generateId() {
+            return Date.now() + Math.random();
+        }
+
+        function formatCurrency(amount) {
+            return 'AED ' + Math.round(amount).toLocaleString('en-AE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        function formatDate(dateStr) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', options);
+        }
+
+        function addProject() {
+            const name = document.getElementById('projectName').value.trim();
+            const description = document.getElementById('projectDescription').value.trim();
+            const totalValue = parseFloat(document.getElementById('totalProjectValue').value) || 0;
+
+            if (!name) {
+                alert('Please enter project name');
+                return;
+            }
+
+            if (totalValue <= 0) {
+                alert('Please enter total project value');
+                return;
+            }
+
+            const project = {
+                id: generateId(),
+                name,
+                description,
+                totalValue,
+                dailyEntries: [],
+                createdAt: new Date().toISOString()
+            };
+
+            projects.push(project);
+            saveProjects();
+            clearProjectForm();
+            displayProjects();
+            alert('✓ Project added successfully!');
+        }
+
+        function clearProjectForm() {
+            document.getElementById('projectName').value = '';
+            document.getElementById('projectDescription').value = '';
+            document.getElementById('totalProjectValue').value = '';
+        }
+
+        function saveProjects() {
+            localStorage.setItem('projects', JSON.stringify(projects));
+        }
+
+        function deleteProject(id) {
+            if (confirm('⚠️ Are you sure you want to delete this project?')) {
+                projects = projects.filter(p => p.id !== id);
+                saveProjects();
+                displayProjects();
+                alert('✓ Project deleted successfully!');
+            }
+        }
+
+        function openEditProjectModal(id) {
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+
+            editingProjectId = id;
+            document.getElementById('editProjectName').value = project.name;
+            document.getElementById('editProjectDescription').value = project.description;
+            document.getElementById('editTotalProjectValue').value = project.totalValue;
+
+            document.getElementById('editProjectModal').classList.add('active');
+        }
+
+        function closeEditProjectModal() {
+            document.getElementById('editProjectModal').classList.remove('active');
+            editingProjectId = null;
+        }
+
+        function saveProjectEdit() {
+            if (!editingProjectId) return;
+
+            const projectIndex = projects.findIndex(p => p.id === editingProjectId);
+            if (projectIndex === -1) return;
+
+            const newName = document.getElementById('editProjectName').value.trim();
+            const newValue = parseFloat(document.getElementById('editTotalProjectValue').value) || 0;
+
+            if (!newName) {
+                alert('Please enter project name');
+                return;
+            }
+
+            if (newValue <= 0) {
+                alert('Please enter valid project value');
+                return;
+            }
+
+            projects[projectIndex].name = newName;
+            projects[projectIndex].description = document.getElementById('editProjectDescription').value.trim();
+            projects[projectIndex].totalValue = newValue;
+
+            saveProjects();
+            closeEditProjectModal();
+            displayProjects();
+            alert('✓ Project updated successfully!');
+        }
+
+        function openAddDailyModal(projectId) {
+            currentProjectIdForDaily = projectId;
+            document.getElementById('dailyDate').valueAsDate = new Date();
+            document.getElementById('dailyAmountReceived').value = '';
+            document.getElementById('dailyExpenses').value = '';
+            document.getElementById('dailyTeamMembers').value = '';
+            document.getElementById('dailyNotes').value = '';
+            document.getElementById('addDailyModal').classList.add('active');
+        }
+
+        function closeAddDailyModal() {
+            document.getElementById('addDailyModal').classList.remove('active');
+            currentProjectIdForDaily = null;
+        }
+
+        function saveDailyEntry() {
+            if (!currentProjectIdForDaily) return;
+
+            const project = projects.find(p => p.id === currentProjectIdForDaily);
+            if (!project) return;
+
+            const date = document.getElementById('dailyDate').value;
+            const amountReceived = parseFloat(document.getElementById('dailyAmountReceived').value) || 0;
+            const expenses = parseFloat(document.getElementById('dailyExpenses').value) || 0;
+            const teamMembers = document.getElementById('dailyTeamMembers').value.trim().split(',').map(m => m.trim()).filter(m => m);
+            const notes = document.getElementById('dailyNotes').value.trim();
+
+            if (!date) {
+                alert('Please select a date');
+                return;
+            }
+
+            const dailyEntry = {
+                id: generateId(),
+                date,
+                amountReceived,
+                expenses,
+                teamMembers,
+                notes,
+                createdAt: new Date().toISOString()
+            };
+
+            project.dailyEntries.push(dailyEntry);
+            saveProjects();
+            closeAddDailyModal();
+            displayProjects();
+            alert('✓ Daily entry added successfully!');
+        }
+
+        function openEditDailyModal(projectId, entryId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+
+            const entry = project.dailyEntries.find(e => e.id === entryId);
+            if (!entry) return;
+
+            editingDailyId = entryId;
+            currentProjectIdForDaily = projectId;
+
+            document.getElementById('editDailyDate').value = entry.date;
+            document.getElementById('editDailyAmountReceived').value = entry.amountReceived;
+            document.getElementById('editDailyExpenses').value = entry.expenses;
+            document.getElementById('editDailyTeamMembers').value = entry.teamMembers.join(', ');
+            document.getElementById('editDailyNotes').value = entry.notes;
+
+            document.getElementById('editDailyModal').classList.add('active');
+        }
+
+        function closeEditDailyModal() {
+            document.getElementById('editDailyModal').classList.remove('active');
+            editingDailyId = null;
+            currentProjectIdForDaily = null;
+        }
+
+        function saveEditDailyEntry() {
+            if (!editingDailyId || !currentProjectIdForDaily) return;
+
+            const project = projects.find(p => p.id === currentProjectIdForDaily);
+            if (!project) return;
+
+            const entryIndex = project.dailyEntries.findIndex(e => e.id === editingDailyId);
+            if (entryIndex === -1) return;
+
+            const date = document.getElementById('editDailyDate').value;
+            if (!date) {
+                alert('Please select a date');
+                return;
+            }
+
+            project.dailyEntries[entryIndex].date = date;
+            project.dailyEntries[entryIndex].amountReceived = parseFloat(document.getElementById('editDailyAmountReceived').value) || 0;
+            project.dailyEntries[entryIndex].expenses = parseFloat(document.getElementById('editDailyExpenses').value) || 0;
+            project.dailyEntries[entryIndex].teamMembers = document.getElementById('editDailyTeamMembers').value.trim().split(',').map(m => m.trim()).filter(m => m);
+            project.dailyEntries[entryIndex].notes = document.getElementById('editDailyNotes').value.trim();
+
+            saveProjects();
+            closeEditDailyModal();
+            displayProjects();
+            alert('✓ Daily entry updated successfully!');
+        }
+
+        function deleteDailyEntry(projectId, entryId) {
+            if (confirm('⚠️ Are you sure you want to delete this daily entry?')) {
+                const project = projects.find(p => p.id === projectId);
+                if (project) {
+                    project.dailyEntries = project.dailyEntries.filter(e => e.id !== entryId);
+                    saveProjects();
+                    displayProjects();
+                    alert('✓ Daily entry deleted successfully!');
+                }
+            }
+        }
+
+        function calculateProjectTotals(project) {
+            let totalExpenses = 0;
+            let totalAmountReceived = 0;
+
+            project.dailyEntries.forEach(entry => {
+                totalExpenses += entry.expenses;
+                totalAmountReceived += entry.amountReceived;
+            });
+
+            const pendingAmount = project.totalValue - totalAmountReceived;
+            const profit = totalAmountReceived - totalExpenses;
+
+            return {
+                totalValue: project.totalValue,
+                totalExpenses,
+                totalAmountReceived,
+                pendingAmount,
+                profit,
+                days: project.dailyEntries.length
+            };
+        }
+
+        function displayProjects() {
+            const container = document.getElementById('projectsList');
+
+            if (projects.length === 0) {
+                container.innerHTML = '<div class="empty-state"><p>📭 No projects yet. Create your first project to get started!</p></div>';
+                return;
+            }
+
+            container.innerHTML = projects.map(project => {
+                const totals = calculateProjectTotals(project);
+
+                return `
+                    <div class="project-card">
+                        <div class="project-header">
+                            <div>
+                                <div class="project-title">${project.name}</div>
+                                ${project.description ? `<div class="project-desc">📝 ${project.description}</div>` : ''}
+                            </div>
+                            <div class="project-actions">
+                                <button class="btn-small btn-edit" onclick="openEditProjectModal(${project.id})">Edit</button>
+                                <button class="btn-small btn-print" onclick="printProject(${project.id})">Print</button>
+                                <button class="btn-small btn-download" onclick="downloadProject(${project.id})">Download</button>
+                                <button class="btn-small btn-delete" onclick="deleteProject(${project.id})">Delete</button>
+                            </div>
+                        </div>
+
+                        <div class="project-summary">
+                            <div class="summary-box">
+                                <div class="summary-label">💼 Total Value</div>
+                                <div class="summary-value">${formatCurrency(totals.totalValue)}</div>
+                            </div>
+                            <div class="summary-box">
+                                <div class="summary-label">💰 Total Received</div>
+                                <div class="summary-value">${formatCurrency(totals.totalAmountReceived)}</div>
+                            </div>
+                            <div class="summary-box">
+                                <div class="summary-label">💸 Total Expenses</div>
+                                <div class="summary-value">${formatCurrency(totals.totalExpenses)}</div>
+                            </div>
+                            <div class="summary-box">
+                                <div class="summary-label">📊 Profit/Loss</div>
+                                <div class="summary-value ${totals.profit >= 0 ? 'profit' : 'loss'}">${formatCurrency(totals.profit)}</div>
+                            </div>
+                            <div class="summary-box">
+                                <div class="summary-label">⏳ Pending Amount</div>
+                                <div class="summary-value">${formatCurrency(totals.pendingAmount)}</div>
+                            </div>
+                            <div class="summary-box">
+                                <div class="summary-label">📅 Total Days</div>
+                                <div class="summary-value">${totals.days}</div>
+                            </div>
+                        </div>
+
+                        <button class="btn-add-daily" onclick="openAddDailyModal(${project.id})">+ Add Daily Entry</button>
+
+                        <div class="daily-entries">
+                            <h3>📅 Daily Entries (${project.dailyEntries.length} records)</h3>
+                            ${project.dailyEntries.length === 0 ? 
+                                '<div class="no-entries">No daily entries yet. Click "Add Daily Entry" to start tracking.</div>' : 
+                                project.dailyEntries.sort((a, b) => new Date(b.date) - new Date(a.date)).map(entry => {
+                                    const dailyProfit = entry.amountReceived - entry.expenses;
+                                    return `
+                                        <div class="daily-entry">
+                                            <div class="daily-entry-date">📅 ${formatDate(entry.date)}</div>
+                                            <div class="daily-entry-grid">
+                                                <div class="daily-entry-item">
+                                                    <div class="daily-entry-item-label">Amount Received</div>
+                                                    <div class="daily-entry-item-value">${formatCurrency(entry.amountReceived)}</div>
+                                                </div>
+                                                <div class="daily-entry-item">
+                                                    <div class="daily-entry-item-label">Expenses</div>
+                                                    <div class="daily-entry-item-value">${formatCurrency(entry.expenses)}</div>
+                                                </div>
+                                                <div class="daily-entry-item">
+                                                    <div class="daily-entry-item-label">Profit</div>
+                                                    <div class="daily-entry-item-value ${dailyProfit >= 0 ? 'profit' : 'loss'}">${formatCurrency(dailyProfit)}</div>
+                                                </div>
+                                            </div>
+                                            ${entry.teamMembers.length > 0 ? `<div class="info-section"><strong>👥 Team Members:</strong> ${entry.teamMembers.map(m => `<span class="tag">${m}</span>`).join('')}</div>` : ''}
+                                            ${entry.notes ? `<div class="info-section"><strong>📝 Description/Notes:</strong> ${entry.notes}</div>` : ''}
+                                            <div class="daily-entry-actions">
+                                                <button class="btn-tiny btn-tiny-edit" onclick="openEditDailyModal(${project.id}, ${entry.id})">Edit</button>
+                                                <button class="btn-tiny btn-tiny-print" onclick="printDailyEntry(${project.id}, ${entry.id})">Print</button>
+                                                <button class="btn-tiny btn-tiny-download" onclick="downloadDailyEntry(${project.id}, ${entry.id})">Download</button>
+                                                <button class="btn-tiny btn-tiny-delete" onclick="deleteDailyEntry(${project.id}, ${entry.id})">Delete</button>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('')
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function printProject(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+
+            const totals = calculateProjectTotals(project);
+            const printWindow = window.open('', '_blank');
+
+            let html = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Print - ${project.name}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 30px; }
+                        .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+                        .summary-box { border: 1px solid #ddd; padding: 15px; text-align: center; }
+                        .summary-label { font-size: 12px; color: #666; margin-bottom: 5px; }
+                        .summary-value { font-size: 18px; font-weight: bold; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        th { background: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left; }
+                        td { padding: 10px; border: 1px solid #ddd; }
+                        .daily-section { margin: 30px 0; page-break-inside: avoid; }
+                        .profit { color: green; font-weight: bold; }
+                        .loss { color: red; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Peacock Blue Air Conditioner & Refrigerators</h1>
+                        <h2>${project.name}</h2>
+                        <p>Printed: ${new Date().toLocaleString()}</p>
+                    </div>
+
+                    <div class="summary">
+                        <div class="summary-box">
+                            <div class="summary-label">Total Value</div>
+                            <div class="summary-value">${formatCurrency(totals.totalValue)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">Total Received</div>
+                            <div class="summary-value">${formatCurrency(totals.totalAmountReceived)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">Total Expenses</div>
+                            <div class="summary-value">${formatCurrency(totals.totalExpenses)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">Profit/Loss</div>
+                            <div class="summary-value ${totals.profit >= 0 ? 'profit' : 'loss'}">${formatCurrency(totals.profit)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">Pending Amount</div>
+                            <div class="summary-value">${formatCurrency(totals.pendingAmount)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">Total Days</div>
+                            <div class="summary-value">${totals.days}</div>
+                        </div>
+                    </div>
+
+                    <h3>Daily Entries</h3>
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount Received</th>
+                            <th>Expenses</th>
+                            <th>Profit</th>
+                            <th>Team Members</th>
+                            <th>Description</th>
+                        </tr>
+                        ${project.dailyEntries.sort((a, b) => new Date(b.date) - new Date(a.date)).map(entry => {
+                            const dailyProfit = entry.amountReceived - entry.expenses;
+                            return `
+                                <tr>
+                                    <td>${formatDate(entry.date)}</td>
+                                    <td>${formatCurrency(entry.amountReceived)}</td>
+                                    <td>${formatCurrency(entry.expenses)}</td>
+                                    <td class="${dailyProfit >= 0 ? 'profit' : 'loss'}">${formatCurrency(dailyProfit)}</td>
+                                    <td>${entry.teamMembers.join(', ')}</td>
+                                    <td>${entry.notes}</td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </table>
+
+                    <script>
+                        window.print();
+                        window.onafterprint = function() { window.close(); };
+                    </script>
+                </body>
+                </html>
+            `;
+
+            printWindow.document.write(html);
+            printWindow.document.close();
+        }
+
+        function printDailyEntry(projectId, entryId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+
+            const entry = project.dailyEntries.find(e => e.id === entryId);
+            if (!entry) return;
+
+            const dailyProfit = entry.amountReceived - entry.expenses;
+            const printWindow = window.open('', '_blank');
+
+            let html = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Daily Entry - ${project.name}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 30px; }
+                        .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+                        .summary-box { border: 1px solid #ddd; padding: 15px; text-align: center; }
+                        .summary-label { font-size: 12px; color: #666; margin-bottom: 5px; }
+                        .summary-value { font-size: 18px; font-weight: bold; }
+                        .info { margin: 20px 0; }
+                        .profit { color: green; font-weight: bold; }
+                        .loss { color: red; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Peacock Blue Air Conditioner & Refrigerators</h1>
+                        <h2>Daily Entry Report</h2>
+                        <p>Project: ${project.name}</p>
+                        <p>Date: ${formatDate(entry.date)}</p>
+                        <p>Printed: ${new Date().toLocaleString()}</p>
+                    </div>
+
+                    <div class="summary">
+                        <div class="summary-box">
+                            <div class="summary-label">Amount Received</div>
+                            <div class="summary-value">${formatCurrency(entry.amountReceived)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">Expenses</div>
+                            <div class="summary-value">${formatCurrency(entry.expenses)}</div>
+                        </div>
+                        <div class="summary-box">
+                            <div class="summary-label">Profit/Loss</div>
+                            <div class="summary-value ${dailyProfit >= 0 ? 'profit' : 'loss'}">${formatCurrency(dailyProfit)}</div>
+                        </div>
+                    </div>
+
+                    ${entry.teamMembers.length > 0 ? `
+                        <div class="info">
+                            <h3>Team Members</h3>
+                            <p>${entry.teamMembers.join(', ')}</p>
+                        </div>
+                    ` : ''}
+
+                    ${entry.notes ? `
+                        <div class="info">
+                            <h3>Description/Notes</h3>
+                            <p>${entry.notes}</p>
+                        </div>
+                    ` : ''}
+
+                    <script>
+                        window.print();
+                        window.onafterprint = function() { window.close(); };
+                    </script>
+                </body>
+                </html>
+            `;
+
+            printWindow.document.write(html);
+            printWindow.document.close();
+        }
+
+        function downloadProject(projectId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+
+            const totals = calculateProjectTotals(project);
+            const filename = `${project.name.replace(/\s+/g, '_')}_Report_${new Date().toISOString().split('T')[0]}.json`;
+
+            const data = {
+                company: 'Peacock Blue Air Conditioner & Refrigerators',
+                location: 'Dubai',
+                currency: 'AED',
+                projectName: project.name,
+                description: project.description,
+                exportedAt: new Date().toLocaleString(),
+                summary: {
+                    totalValue: totals.totalValue,
+                    totalReceived: totals.totalAmountReceived,
+                    totalExpenses: totals.totalExpenses,
+                    profit: totals.profit,
+                    pendingAmount: totals.pendingAmount,
+                    totalDays: totals.days
+                },
+                dailyEntries: project.dailyEntries
+            };
+
+            const dataStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(url);
+            alert('✓ Project downloaded successfully!');
+        }
+
+        function downloadDailyEntry(projectId, entryId) {
+            const project = projects.find(p => p.id === projectId);
+            if (!project) return;
+
+            const entry = project.dailyEntries.find(e => e.id === entryId);
+            if (!entry) return;
+
+            const dailyProfit = entry.amountReceived - entry.expenses;
+            const filename = `${project.name}_${entry.date}_DailyEntry.json`;
+
+            const data = {
+                company: 'Peacock Blue Air Conditioner & Refrigerators',
+                projectName: project.name,
+                date: entry.date,
+                formattedDate: formatDate(entry.date),
+                amountReceived: entry.amountReceived,
+                expenses: entry.expenses,
+                profit: dailyProfit,
+                teamMembers: entry.teamMembers,
+                notes: entry.notes,
+                exportedAt: new Date().toLocaleString()
+            };
+
+            const dataStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(url);
+            alert('✓ Daily entry downloaded successfully!');
+        }
+
+        function downloadAllProjects() {
+            if (projects.length === 0) {
+                alert('No projects to download!');
+                return;
+            }
+
+            const filename = `AllProjects_${new Date().toISOString().split('T')[0]}.json`;
+            const data = {
+                company: 'Peacock Blue Air Conditioner & Refrigerators',
+                location: 'Dubai',
+                currency: 'AED',
+                totalProjects: projects.length,
+                exportedAt: new Date().toLocaleString(),
+                projects: projects.map(project => {
+                    const totals = calculateProjectTotals(project);
+                    return {
+                        ...project,
+                        summary: {
+                            totalValue: totals.totalValue,
+                            totalReceived: totals.totalAmountReceived,
+                            totalExpenses: totals.totalExpenses,
+                            profit: totals.profit,
+                            pendingAmount: totals.pendingAmount,
+                            totalDays: totals.days
+                        }
+                    };
+                })
+            };
+
+            const dataStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(url);
+            alert('✓ All projects downloaded successfully!');
+        }
+
+        function printAllProjects() {
+            if (projects.length === 0) {
+                alert('No projects to print!');
+                return;
+            }
+
+            const printWindow = window.open('', '_blank');
+            let html = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>All Projects Report</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .header { text-align: center; border-bottom: 3px solid #333; padding-bottom: 20px; margin-bottom: 30px; }
+                        .project { page-break-inside: avoid; margin-bottom: 40px; border: 1px solid #ddd; padding: 20px; }
+                        .project-title { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+                        .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
+                        .summary-box { border: 1px solid #ddd; padding: 10px; text-align: center; }
+                        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                        th { background: #f0f0f0; padding: 8px; border: 1px solid #ddd; text-align: left; }
+                        td { padding: 8px; border: 1px solid #ddd; }
+                        .profit { color: green; font-weight: bold; }
+                        .loss { color: red; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>Peacock Blue Air Conditioner & Refrigerators</h1>
+                        <h2>Complete Projects Report</h2>
+                        <p>Printed: ${new Date().toLocaleString()}</p>
+                    </div>
+
+                    ${projects.map(project => {
+                        const totals = calculateProjectTotals(project);
+                        return `
+                            <div class="project">
+                                <div class="project-title">${project.name}</div>
+                                <div class="summary">
+                                    <div class="summary-box">
+                                        <small>Total Value</small>
+                                        <div>${formatCurrency(totals.totalValue)}</div>
+                                    </div>
+                                    <div class="summary-box">
+                                        <small>Total Received</small>
+                                        <div>${formatCurrency(totals.totalAmountReceived)}</div>
+                                    </div>
+                                    <div class="summary-box">
+                                        <small>Total Expenses</small>
+                                        <div>${formatCurrency(totals.totalExpenses)}</div>
+                                    </div>
+                                    <div class="summary-box">
+                                        <small>Profit/Loss</small>
+                                        <div class="${totals.profit >= 0 ? 'profit' : 'loss'}">${formatCurrency(totals.profit)}</div>
+                                    </div>
+                                    <div class="summary-box">
+                                        <small>Pending</small>
+                                        <div>${formatCurrency(totals.pendingAmount)}</div>
+                                    </div>
+                                    <div class="summary-box">
+                                        <small>Days</small>
+                                        <div>${totals.days}</div>
+                                    </div>
+                                </div>
+
+                                <table>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Received</th>
+                                        <th>Expenses</th>
+                                        <th>Profit</th>
+                                        <th>Team</th>
+                                    </tr>
+                                    ${project.dailyEntries.sort((a, b) => new Date(b.date) - new Date(a.date)).map(entry => {
+                                        const dailyProfit = entry.amountReceived - entry.expenses;
+                                        return `
+                                            <tr>
+                                                <td>${formatDate(entry.date)}</td>
+                                                <td>${formatCurrency(entry.amountReceived)}</td>
+                                                <td>${formatCurrency(entry.expenses)}</td>
+                                                <td class="${dailyProfit >= 0 ? 'profit' : 'loss'}">${formatCurrency(dailyProfit)}</td>
+                                                <td>${entry.teamMembers.join(', ')}</td>
+                                            </tr>
+                                        `;
+                                    }).join('')}
+                                </table>
+                            </div>
+                        `;
+                    }).join('')}
+
+                    <script>
+                        window.print();
+                        window.onafterprint = function() { window.close(); };
+                    </script>
+                </body>
+                </html>
+            `;
+
+            printWindow.document.write(html);
+            printWindow.document.close();
+        }
+
+        // Close modals when clicking outside
+        ['editProjectModal', 'addDailyModal', 'editDailyModal'].forEach(id => {
+            document.getElementById(id).addEventListener('click', function(e) {
+                if (e.target === this) {
+                    if (id === 'editProjectModal') closeEditProjectModal();
+                    if (id === 'addDailyModal') closeAddDailyModal();
+                    if (id === 'editDailyModal') closeEditDailyModal();
+                }
+            });
+        });
+
+        // Initialize on page load
+        displayProjects();
+    </script>
+</body>
+</html>
