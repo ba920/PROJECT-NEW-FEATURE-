@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - Peacock Blue</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            color: #333;
+            font-size: 28px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .btn-print {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+        }
+
+        .btn-back {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-info {
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+        }
+
+        .project-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .project-desc {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .project-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .profit {
+            color: #27ae60 !important;
+        }
+
+        .loss {
+            color: #e74c3c !important;
+        }
+
+        .daily-reports {
+            margin-top: 30px;
+        }
+
+        .daily-reports h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .report-header h3 {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .btn-print-daily {
+            padding: 8px 16px;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .btn-print-daily:hover {
+            background: #d35400;
+            transform: translateY(-2px);
+        }
+
+        .daily-entry {
+            background: linear-gradient(to right, #f8f9fa, #ffffff);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .daily-entry:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateX(5px);
+        }
+
+        .daily-date {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .daily-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .daily-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .daily-item-label {
+            font-size: 11px;
+            color: #999;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .daily-item-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .info-section {
+            margin-top: 12px;
+            padding: 12px;
+            background: #f0f8ff;
+            border-left: 3px solid #0277bd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .info-section strong {
+            color: #0277bd;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e8f4f8;
+            color: #0277bd;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin: 4px 4px 4px 0;
+            font-weight: 600;
+        }
+
+        .no-entries {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .print-section {
+            display: none;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            header {
+                border-bottom: 2px solid #333;
+                margin-bottom: 20px;
+                page-break-after: avoid;
+            }
+
+            .header-actions {
+                display: none;
+            }
+
+            .content {
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .daily-entry {
+                page-break-inside: avoid;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                margin-bottom: 15px;
+            }
+
+            .print-section {
+                display: block;
+            }
+
+            .btn-print-daily {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-actions {
+                margin-top: 15px;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .project-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1 id="projectName">پروجیکٹ</h1>
+                <p id="projectDesc"></p>
+            </div>
+            <div class="header-actions">
+                <button class="btn-action btn-print" onclick="printProject()">🖨️ پورا پروجیکٹ پرنٹ کریں</button>
+                <button class="btn-action btn-back" onclick="goBack()">← واپس جائیں</button>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="project-info">
+                <div class="project-stats" id="projectStats"></div>
+            </div>
+
+            <div class="daily-reports">
+                <div class="report-header">
+                    <h2>📅 روزانہ رپورٹس</h2>
+                    <button class="btn-print-daily" onclick="printDailyReports()">🖨️ روزانہ رپورٹس پرنٹ کریں</button>
+                </div>
+                <div id="dailyReportsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentProject = null;
+        let allProjects = JSON.parse(localStorage.getItem('projects')) || [];
+        let currentProjectId = localStorage.getItem('currentProjectId');
+
+        function formatCurrency(amount) {
+            return 'AED ' + Math.round(amount).toLocaleString('en-AE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        function formatDate(dateStr) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-AE', options);
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function loadProjectDetails() {
+            if (!currentProjectId) {
+                document.body.innerHTML = '<div style="padding: 40px; text-align: center; color: #999;">پروجیکٹ نہیں ملا۔ براہ کرم دوبارہ کوشش کریں۔</div>';
+                return;
+            }
+
+            currentProject = allProjects.find(p => p.id == currentProjectId);
+
+            if (!currentProject) {
+                document.body.innerHTML = '<div style="padding: 40px; text-align: center; color: #999;">پروجیکٹ نہیں ملا۔</div>';
+                return;
+            }
+
+            displayProjectInfo();
+            displayDailyReports();
+        }
+
+        function calculateProjectTotals(project) {
+            let totalExpenses = 0;
+            let totalAmountReceived = 0;
+
+            project.dailyEntries.forEach(entry => {
+                totalExpenses += entry.expenses;
+                totalAmountReceived += entry.amountReceived;
+            });
+
+            const pendingAmount = project.totalValue - totalAmountReceived;
+            const profit = totalAmountReceived - totalExpenses;
+
+            return {
+                totalValue: project.totalValue,
+                totalExpenses,
+                totalAmountReceived,
+                pendingAmount,
+                profit,
+                days: project.dailyEntries.length
+            };
+        }
+
+        function displayProjectInfo() {
+            const totals = calculateProjectTotals(currentProject);
+
+            document.getElementById('projectName').textContent = currentProject.name;
+            document.getElementById('projectDesc').textContent = currentProject.description || 'کوئی تفصیل نہیں';
+
+            const statsHTML = `
+                <div class="stat-box">
+                    <div class="stat-label">💼 کل قیمت</div>
+                    <div class="stat-value">${formatCurrency(totals.totalValue)}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">💰 وصول شدہ</div>
+                    <div class="stat-value">${formatCurrency(totals.totalAmountReceived)}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">⏳ زیر التوا</div>
+                    <div class="stat-value">${formatCurrency(totals.pendingAmount)}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">💸 اخراجات</div>
+                    <div class="stat-value">${formatCurrency(totals.totalExpenses)}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">📊 منافع/نقصان</div>
+                    <div class="stat-value ${totals.profit >= 0 ? 'profit' : 'loss'}">${formatCurrency(totals.profit)}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">📅 دن</div>
+                    <div class="stat-value">${totals.days}</div>
+                </div>
+            `;
+
+            document.getElementById('projectStats').innerHTML = statsHTML;
+        }
+
+        function displayDailyReports() {
+            const container = document.getElementById('dailyReportsList');
+
+            if (currentProject.dailyEntries.length === 0) {
+                container.innerHTML = '<div class="no-entries">کوئی روزانہ رپورٹ نہیں ملی۔</div>';
+                return;
+            }
+
+            const sortedEntries = [...currentProject.dailyEntries].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            container.innerHTML = sortedEntries.map(entry => {
+                const dailyProfit = entry.amountReceived - entry.expenses;
+                return `
+                    <div class="daily-entry">
+                        <div class="daily-date">📅 ${formatDate(entry.date)}</div>
+                        <div class="daily-grid">
+                            <div class="daily-item">
+                                <div class="daily-item-label">وصول شدہ</div>
+                                <div class="daily-item-value">${formatCurrency(entry.amountReceived)}</div>
+                            </div>
+                            <div class="daily-item">
+                                <div class="daily-item-label">اخراجات</div>
+                                <div class="daily-item-value">${formatCurrency(entry.expenses)}</div>
+                            </div>
+                            <div class="daily-item">
+                                <div class="daily-item-label">منافع</div>
+                                <div class="daily-item-value ${dailyProfit >= 0 ? 'profit' : 'loss'}">${formatCurrency(dailyProfit)}</div>
+                            </div>
+                        </div>
+                        ${entry.teamMembers.length > 0 ? `<div class="info-section"><strong>👥 ٹیم کے اراکین:</strong> ${entry.teamMembers.map(m => `<span class="tag">${m}</span>`).join('')}</div>` : ''}
+                        ${entry.materials.length > 0 ? `<div class="info-section"><strong>🔧 مستعمل مواد:</strong> ${entry.materials.map(m => `<span class="tag">${m}</span>`).join('')}</div>` : ''}
+                        ${entry.notes ? `<div class="info-section"><strong>📝 نوٹس:</strong> ${entry.notes}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function printProject() {
+            window.print();
+        }
+
+        function printDailyReports() {
+            // Create a new window for printing only daily reports
+            const printWindow = window.open('', '', 'height=600,width=800');
+            const totals = calculateProjectTotals(currentProject);
+            const sortedEntries = [...currentProject.dailyEntries].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            let reportsHTML = `
+                <!DOCTYPE html>
+                <html dir="rtl" lang="ur">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>${currentProject.name} - روزانہ رپورٹس</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            padding: 20px;
+                            direction: rtl;
+                        }
+                        .header {
+                            text-align: center;
+                            margin-bottom: 30px;
+                            border-bottom: 2px solid #333;
+                            padding-bottom: 15px;
+                        }
+                        .header h1 {
+                            margin: 0;
+                            font-size: 24px;
+                        }
+                        .header p {
+                            margin: 5px 0 0 0;
+                            color: #666;
+                        }
+                        .stats {
+                            display: grid;
+                            grid-template-columns: repeat(3, 1fr);
+                            gap: 15px;
+                            margin-bottom: 30px;
+                        }
+                        .stat-item {
+                            border: 1px solid #ddd;
+                            padding: 15px;
+                            text-align: center;
+                            border-radius: 5px;
+                        }
+                        .stat-item label {
+                            display: block;
+                            font-size: 12px;
+                            color: #666;
+                            margin-bottom: 8px;
+                        }
+                        .stat-item value {
+                            display: block;
+                            font-size: 18px;
+                            font-weight: bold;
+                        }
+                        .daily-entry {
+                            border: 1px solid #ddd;
+                            padding: 15px;
+                            margin-bottom: 15px;
+                            border-radius: 5px;
+                            page-break-inside: avoid;
+                        }
+                        .daily-date {
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                            font-size: 14px;
+                        }
+                        .daily-grid {
+                            display: grid;
+                            grid-template-columns: repeat(3, 1fr);
+                            gap: 10px;
+                            margin-bottom: 10px;
+                        }
+                        .daily-item {
+                            text-align: center;
+                            border: 1px solid #eee;
+                            padding: 8px;
+                            border-radius: 4px;
+                        }
+                        .daily-item label {
+                            font-size: 11px;
+                            color: #999;
+                            display: block;
+                            margin-bottom: 4px;
+                        }
+                        .daily-item value {
+                            font-weight: bold;
+                            display: block;
+                        }
+                        .tag {
+                            display: inline-block;
+                            background: #e8f4f8;
+                            padding: 3px 6px;
+                            border-radius: 10px;
+                            font-size: 11px;
+                            margin: 3px;
+                        }
+                        .info-section {
+                            margin-top: 10px;
+                            padding: 8px;
+                            background: #f9f9f9;
+                            border-right: 3px solid #0277bd;
+                            font-size: 12px;
+                        }
+                        @media print {
+                            body { margin: 0; padding: 10px; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>${currentProject.name}</h1>
+                        <p>روزانہ رپورٹس</p>
+                        <p>${new Date().toLocaleDateString('ur-PK')}</p>
+                    </div>
+
+                    <div class="stats">
+                        <div class="stat-item">
+                            <label>کل قیمت</label>
+                            <value>${formatCurrency(totals.totalValue)}</value>
+                        </div>
+                        <div class="stat-item">
+                            <label>وصول شدہ</label>
+                            <value>${formatCurrency(totals.totalAmountReceived)}</value>
+                        </div>
+                        <div class="stat-item">
+                            <label>اخراجات</label>
+                            <value>${formatCurrency(totals.totalExpenses)}</value>
+                        </div>
+                    </div>
+            `;
+
+            sortedEntries.forEach(entry => {
+                const dailyProfit = entry.amountReceived - entry.expenses;
+                reportsHTML += `
+                    <div class="daily-entry">
+                        <div class="daily-date">📅 ${formatDate(entry.date)}</div>
+                        <div class="daily-grid">
+                            <div class="daily-item">
+                                <label>وصول شدہ</label>
+                                <value>${formatCurrency(entry.amountReceived)}</value>
+                            </div>
+                            <div class="daily-item">
+                                <label>اخراجات</label>
+                                <value>${formatCurrency(entry.expenses)}</value>
+                            </div>
+                            <div class="daily-item">
+                                <label>منافع</label>
+                                <value>${formatCurrency(dailyProfit)}</value>
+                            </div>
+                        </div>
+                        ${entry.teamMembers.length > 0 ? `<div class="info-section"><strong>👥 ٹیم:</strong> ${entry.teamMembers.map(m => `<span class="tag">${m}</span>`).join('')}</div>` : ''}
+                        ${entry.materials.length > 0 ? `<div class="info-section"><strong>🔧 مواد:</strong> ${entry.materials.map(m => `<span class="tag">${m}</span>`).join('')}</div>` : ''}
+                        ${entry.notes ? `<div class="info-section"><strong>📝 نوٹس:</strong> ${entry.notes}</div>` : ''}
+                    </div>
+                `;
+            });
+
+            reportsHTML += `
+                </body>
+                </html>
+            `;
+
+            printWindow.document.write(reportsHTML);
+            printWindow.document.close();
+            setTimeout(() => {
+                printWindow.print();
+            }, 250);
+        }
+
+        // Load project details on page load
+        loadProjectDetails();
+    </script>
+</body>
+</html>
